@@ -1,0 +1,37 @@
+<h2>..</h2>
+<div class="row">
+  <div class="col-md-3">
+    <ul class = "sidebar-list">
+      <li class = "sidebar-item"><%= link_to "Your Listing", rooms_path, class: "sidebar-link active"%></li>
+      <li class = "sidebar-item"><%= link_to "Your Reservation", rooms_path, class: "sidebar-link"%></li>
+      <li class = "sidebar-item"><%= link_to "Your Trips", your_trips_path, class: "sidebar-link active"%></li>
+    </ul>
+  </div>
+  <div class="col-md-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Your Trips
+      </div>
+      <div class="panel-body">
+        <% @trips.each do |trips| %>
+          <div class="row">
+            <div class="col-md-2">
+              <%= @trips.start_date%>
+            </div>
+            <div class="col-md-2">
+              <%= image_tag trip.room.photos[0].image.url(:thumb)%>
+            </div>
+            <div class="col-md-2">
+              <i class="fa fa-user-secret" aria-hidden="true"></i>
+            </div>
+            <div class="col-md-2">
+              <h4><%= trip.total%></h4>
+            </div>
+          </div>
+          <hr>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>

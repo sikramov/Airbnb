@@ -1,0 +1,69 @@
+<%= form_for([@room, @room.reservations.new]) do |f|%>
+  <div class="row">
+    <div class="col-md-6">
+        <label>Checkin</label>
+        <%= f.text_field :start_date, placeholder: "Start Date", class: 'start_date'%>
+    </div>
+    <div class="col-md-6">
+        <label id = "end_label">Checkout</label>
+        <%= f.text_field :end_date, placeholder: "End Date", class: "end_date"%>
+    </div>
+  </div>
+
+
+
+
+  <%= f.hidden_field :room_id, value: @room.id%>
+  <%= f.hidden_field :price, value: @room.price%>
+  <%= f.hidden_field :total, id: 'reservation_total'%>
+
+  <div class="preview" style = "display: none">
+    <h4><span id="message"></span></h4>
+
+    <table class="reservation-table">
+      <tbody>
+        <tr>
+          <td>Day(s)</td>
+          <td><span id = "reservation-days"></span></td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td><span id="reservation_sum"></span></td>
+
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <br>
+  <%= f.submit "Book Now", class: "btn btn-danger"%>
+<% end %>
+
+
+<script type="text/javascript">
+    $(function(){
+      $.ajax({
+        url: '/preload',
+        data: {'room_id': <%= @room.id %>},
+        dataType: 'json',
+        success: function(data){
+          $.each(data, function(arrID, arrValue){
+            for(var i = new Date(arrValue.start_date); i <= new Date(arrValue.end_date); i.setDate(i.getDate()+1)){
+              console.log(i);
+            }
+
+          })
+        }
+
+      })
+
+
+      $('#reservation_start_date').datepicker({
+        dateFormat: "dd-mm-yy"
+      })
+      $('#reservation_end_date').datepicker({
+        dateFormat: "dd-mm-yy"
+      })
+    })
+</script>
